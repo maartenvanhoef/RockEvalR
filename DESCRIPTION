@@ -3,7 +3,7 @@ Title: Read and Manage Rock-Eval data files
 Version: 0.0.0.9000
 Authors@R: 
     person("Maarten", "van Hoef", , "maartenvanhoef@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: This package was made to do additional analyses with data from the Rock-Eval 7S. Included are functions to import raw data (preferably after Geoworks modification), do additional calculations and view the thermograms.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
