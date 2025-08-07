@@ -87,10 +87,9 @@ RE_read <- function(dataloc){
       file.i.cals<-as.numeric(str_extract(file.i.cals,"(?<==).*"))
       names(file.i.cals)<-c("cal_FID","cal_Tmax","cal_Tpeak")
 
-    }
+    }    else{
+      #2.2.6b escape when file has not been modified by Geoworks
 
-    #2.2.6b escape when file has not been modified by Geoworks
-    else{
       warning(paste0("No Geoworks cursors or calibration found for: ",
                      files[i]," setting values to NA."))
 
@@ -140,10 +139,10 @@ RE_read <- function(dataloc){
                            Pyrolysis=table.isp,Oxidation=table.iso,
                            Cursors=file.i.curs, Calibration=file.i.cals,
                            Coefficients=file.coefficients)
-    }
 
-    #2.2.2b escape when data is incorrect
-    else{
+    }else{
+      #2.2.2b escape when data is incorrect
+
       file.list[[i]]<-"INCORRECT DATA ERROR"
       warning(paste0("Incorrect data found in file: ",files[i],"."))
     }
