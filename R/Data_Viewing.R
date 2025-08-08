@@ -72,6 +72,9 @@ RE_plot <- function(datalist, analysis, oven="both", thermogram="all"){
     #1.4.3 plot cursors and baseline
     invisible(mapply(function(curs) abline(v=curs, col="red3"), curs=select.curs))
     abline(h=select.base, col="royalblue4")
+
+    #1.4.4 add description text
+    mtext(paste0(oven.i,"-",thermo.i),side=3)
   }
 
   }
