@@ -77,6 +77,9 @@ RE_plot <- function(datalist, analysis, oven="both", thermogram="all"){
     mtext(paste0(oven.i,"-",thermo.i),side=3)
   }
 
+    #1.5 change par back to 1 plot
+    par(mfrow=c(1,1))
+
   }
 
 
