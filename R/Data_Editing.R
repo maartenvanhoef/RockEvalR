@@ -18,7 +18,7 @@ RE_traparea<-function(x,y){
   #1.3 Integral is approximated by the sum of (y_n + y_n+1)/2 x dx
   area<-sum(my*dx)
 
-  area
+area
 }
 
 
@@ -138,6 +138,7 @@ RE_convert<-function(list){
                              sample[["Oxidation"]][["SO2"]]/as.numeric(sample[["Parameters"]]["Quant"])/1000
                            sample})
 
+list.converted
 }
 
 
@@ -166,19 +167,19 @@ RE_surfaces<-function(list){
 
       #2.1.1 Determine time ranges between Rock-Eval cursors
       tr.s1<-s.seq(min(sample[["Pyrolysis"]]["t"]),sample[["Cursors"]]["curs1.1"])
-      tr.s2<-s.seq(sample[["Cursors"]]["curs1.1"],max(sample[["Pyrolysis"]]["t"]))
+      tr.s2<-s.seq(sample[["Cursors"]]["curs1.1"],length(sample[["Pyrolysis"]][["t"]]))
 
       tr.s3CO<-s.seq(min(sample[["Pyrolysis"]]["t"]),sample[["Cursors"]]["curs2.2"])
-      tr.s3COi<-s.seq(sample[["Cursors"]]["curs2.2"],max(sample[["Pyrolysis"]]["t"]))
+      tr.s3COi<-s.seq(sample[["Cursors"]]["curs2.2"],length(sample[["Pyrolysis"]][["t"]]))
 
       tr.s3CO2<-s.seq(min(sample[["Pyrolysis"]]["t"]),sample[["Cursors"]]["curs3.2"])
-      tr.s3CO2i<-s.seq(sample[["Cursors"]]["curs3.2"],max(sample[["Pyrolysis"]]["t"]))
+      tr.s3CO2i<-s.seq(sample[["Cursors"]]["curs3.2"],length(sample[["Pyrolysis"]][["t"]]))
 
       tr.s4CO<-s.seq(min(sample[["Oxidation"]]["t"]),sample[["Cursors"]]["curs5.2"])
-      tr.s4COi<-s.seq(sample[["Cursors"]]["curs5.2"],max(sample[["Oxidation"]]["t"]))
+      tr.s4COi<-s.seq(sample[["Cursors"]]["curs5.2"],length(sample[["Oxidation"]][["t"]]))
 
       tr.s4CO2<-s.seq(min(sample[["Oxidation"]]["t"]),sample[["Cursors"]]["curs6.2"])
-      tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"],max(sample[["Oxidation"]]["t"]))
+      tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"],length(sample[["Oxidation"]][["t"]]))
 
       #2.1.2 Compute the area between these cursors
       S1<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s1],sample[["Pyrolysis"]][["CH"]][tr.s1])
@@ -204,7 +205,10 @@ RE_surfaces<-function(list){
       sample
     })
 
-
+list.extended
 }
 
 
+# to do
+# -automated cursor adjust for pyr CO2
+# -but only for SOIL cycle
