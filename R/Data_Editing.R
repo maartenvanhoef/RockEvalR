@@ -22,6 +22,29 @@ area
 }
 
 
+#' Cumulative trapezoidal integration
+#'
+#' This function does a step wise trapezoidal integration.
+#'
+#' @param x Independent variable for integral (e.g. time)
+#' @param y Dependent variable of same length as x
+#' @return Trapezoidal area under time series data
+#' @export
+RE_cumtraparea<-function(x,y){
+  # Area is calculated manually (alternatives did not perform better).
+
+  #1.1 Determine time steps
+  dx<-diff(x)
+
+  #1.2 Determine mean values between each step
+  my<-(head(y, -1) + tail(y, -1)) / 2
+
+  #1.3 Integral is approximated by the sum of (y_n + y_n+1)/2 x dx
+  area<-cumsum(my*dx)
+
+  area
+}
+
 
 #' Convert Rock-Eval signal to right units
 #'
@@ -166,19 +189,19 @@ RE_surfaces<-function(list){
   list.extended<-lapply(list.extended, function(sample){
 
       #2.1.1 Determine time ranges between Rock-Eval cursors
-      tr.s1<-s.seq(min(sample[["Pyrolysis"]]["t"]),sample[["Cursors"]]["curs1.1"])
+      tr.s1<-s.seq(1,sample[["Cursors"]]["curs1.1"])
       tr.s2<-s.seq(sample[["Cursors"]]["curs1.1"],length(sample[["Pyrolysis"]][["t"]]))
 
-      tr.s3CO<-s.seq(min(sample[["Pyrolysis"]]["t"]),sample[["Cursors"]]["curs2.2"])
+      tr.s3CO<-s.seq(1,sample[["Cursors"]]["curs2.2"])
       tr.s3COi<-s.seq(sample[["Cursors"]]["curs2.2"],length(sample[["Pyrolysis"]][["t"]]))
 
-      tr.s3CO2<-s.seq(min(sample[["Pyrolysis"]]["t"]),sample[["Cursors"]]["curs3.2"])
+      tr.s3CO2<-s.seq(1,sample[["Cursors"]]["curs3.2"])
       tr.s3CO2i<-s.seq(sample[["Cursors"]]["curs3.2"],length(sample[["Pyrolysis"]][["t"]]))
 
-      tr.s4CO<-s.seq(min(sample[["Oxidation"]]["t"]),sample[["Cursors"]]["curs5.2"])
+      tr.s4CO<-s.seq(1,sample[["Cursors"]]["curs5.2"])
       tr.s4COi<-s.seq(sample[["Cursors"]]["curs5.2"],length(sample[["Oxidation"]][["t"]]))
 
-      tr.s4CO2<-s.seq(min(sample[["Oxidation"]]["t"]),sample[["Cursors"]]["curs6.2"])
+      tr.s4CO2<-s.seq(1,sample[["Cursors"]]["curs6.2"])
       tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"],length(sample[["Oxidation"]][["t"]]))
 
       #2.1.2 Compute the area between these cursors
