@@ -262,7 +262,7 @@ RE_Ccombined<-function(list){
     S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*12/(44*10)
     S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*12/(44*10)
 
-    #3.1.3 Combine the separated curves over the whole time range
+    #3.1.4 Combine the separated curves over the whole time range
     POC.t<-c(S1.t,S2.t)+c(S3CO.t,S3COi.t/2)+c(S3CO2.t,S3CO2i.t*0)
     PIC.t<-c(S1.t*0,S2.t*0)+c(S3CO.t*0,S3COi.t/2)+c(S3CO2.t*0,S3CO2i.t)
 
@@ -283,3 +283,88 @@ list.adapted
 
 
 
+#' Determine the total H and O released at each time step
+#'
+#' Combines the amount of H and O released of the different thermograms to calculate their respective fluxes over time.
+#'
+#' @param list List with converted Rock-Eval data
+#' @return The H and O flux at each time step
+#' @export
+RE_OHcombined<-function(list){
+  #1.1 make new list to be adapted from input
+  list.adapted<-list
+
+  #1.2 define safe sequence in case of NAs
+  s.seq<-function(x,y){
+    if (all(is.na(x))|all(is.na(y))) {NA} else {
+      seq(x,y,by=1)}
+  }
+
+  #2 the total C in each oven is a simple addition
+  list.adapted<-lapply(list.adapted, function(sample){
+    PH.t<-
+      sample[["Pyrolysis"]][["CH"]]*0.83/10
+
+    PO.t<-
+      sample[["Pyrolysis"]][["CO"]]*12/(28*10)+
+      sample[["Pyrolysis"]][["CO2"]]*12/(44*10)
+
+    RO.t<-
+      sample[["Oxidation"]][["CO"]]*12/(28*10)+
+      sample[["Oxidation"]][["CO2"]]*12/(44*10)
+
+    #3 the separation between organic and inorganic varies for the different curves (S1, S2, S3, ...)
+
+    #3.1.1 Determine time ranges between Rock-Eval cursors
+    tr.s1<-s.seq(1,sample[["Cursors"]]["curs1.1"])
+    tr.s2<-s.seq(sample[["Cursors"]]["curs1.1"]+1,length(sample[["Pyrolysis"]][["t"]]))
+
+    tr.s3CO<-s.seq(1,sample[["Cursors"]]["curs2.2"])
+    tr.s3COi<-s.seq(sample[["Cursors"]]["curs2.2"]+1,length(sample[["Pyrolysis"]][["t"]]))
+
+    tr.s3CO2<-s.seq(1,sample[["Cursors"]]["curs3.2"])
+    tr.s3CO2i<-s.seq(sample[["Cursors"]]["curs3.2"]+1,length(sample[["Pyrolysis"]][["t"]]))
+
+    tr.s4CO<-s.seq(1,sample[["Cursors"]]["curs5.2"])
+    tr.s4COi<-s.seq(sample[["Cursors"]]["curs5.2"]+1,length(sample[["Oxidation"]][["t"]]))
+
+    tr.s4CO2<-s.seq(1,sample[["Cursors"]]["curs6.2"])
+    tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"]+1,length(sample[["Oxidation"]][["t"]]))
+
+    #3.1.2 Compute the C flux between these cursors
+    S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.17/10
+    S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.17/10
+
+    S3CO.t<-sample[["Pyrolysis"]][["CO"]][tr.s3CO]*16/(28*10)
+    S3COi.t<-sample[["Pyrolysis"]][["CO"]][tr.s3COi]*16/(28*10)
+
+    S3CO2.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2]*32/(44*10)
+    S3CO2i.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i]*32/(44*10)
+
+    S4CO.t<-sample[["Oxidation"]][["CO"]][tr.s4CO]*16/(28*10)
+    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*16/(28*10)
+
+    S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*32/(44*10)
+    S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*32/(44*10)
+
+    #3.1.4 Combine the separated curves over the whole time range
+    POH.t<-c(S1.t,S2.t)
+    POO.t<-c(S3CO.t,S3COi.t/2)+c(S3CO2.t,S3CO2i.t*0)
+    PIO.t<-c(S3CO.t*0,S3COi.t/2)+c(S3CO2.t*0,S3CO2i.t)
+
+    ROO.t<-c(S4CO.t,S4COi.t*0)+c(S4CO2.t,S5.t*0)
+    RIO.t<-c(S4CO.t*0,S4COi.t)+c(S4CO2.t*0,S5.t)
+
+
+    values.P<-data.frame(POH=POH.t, PH=PH.t,
+                         POO=POO.t, PIO=PIO.t, PO=PO.t)
+    values.O<-data.frame(ROO=ROO.t, RIO=RIO.t, RO=RO.t)
+
+    sample[["Pyrolysis"]]<-cbind(sample[["Pyrolysis"]],values.P)
+    sample[["Oxidation"]]<-cbind(sample[["Oxidation"]],values.O)
+
+    sample
+  })
+
+  list.adapted
+}

@@ -32,8 +32,8 @@ RE_read <- function(dataloc){
       #2.2.3 description of the lines to cut
       file.i.rp1<-which(str_detect(file.i,"Curves Pyro"))+1 #row pyro start
       file.i.rp2<-which(str_detect(file.i,"Curves Oxi"))-1 #row pyro end
-      file.i.ro1<-which(str_detect(file.i,"Curves Oxi"))+1 #row pyro start
-      file.i.ro2<-length(file.i) #row pyro end
+      file.i.ro1<-which(str_detect(file.i,"Curves Oxi"))+1 #row oxi start
+      file.i.ro2<-length(file.i) #row oxi end - this may be affected by additions to the file, need to check
 
 
       #2.2.4 cut pyro part

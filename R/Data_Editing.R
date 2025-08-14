@@ -166,72 +166,114 @@ list.converted
 
 
 
-#' Calculate the Rock-Eval surfaces
-#'
-#' This function calculates the areas of the different Rock-Eval zones. Input should be converted already.
-#'
-#' @param list List with converted Rock-Eval data from RE_read
-#' @return Input list with included areas of Rock-Eval zones
-#' @export
-RE_surfaces<-function(list){
-  # Uses the weight converted values which is slightly different from Geoworks
 
-  #1.1 take list to extend
-  list.extended<-list
+#' Cursor adjustment for soil cycle
+#'
+#' This function adjusts the unaltered pyrolysis CO2 cursor which separates organic and inorganic C. By default this value is fixed at 400 C in Geoworks, however, for soils the valley between the two peaks may be more appropriate.
+#' The function alter only the samples that are run with the SOIL or SOIL TS cycle and only samples that have their cursor not manually adjusted already.
+#'
+#' @param list List with raw Rock-Eval data from RE_read
+#' @param plot Create plot of cursor determination TRUE or FALSE
+#' @return List with adjusted pyrolysis CO2 cursor
+#' @export
+RE_cursadjust<-function(list, plot=FALSE){
+
+  #1.1 Create new converted list as copy of input list
+  list.converted<-list
 
   #1.2 define safe sequence in case of NAs
   s.seq<-function(x,y){
-  if (all(is.na(x))|all(is.na(y))) {NA} else {
-    seq(x,y,by=1)}
+    if (all(is.na(x))|all(is.na(y))) {NA} else {
+      seq(x,y,by=1)}
   }
 
-  #2 Determine zones for C
-  list.extended<-lapply(list.extended, function(sample){
+  #2 Determine the adjsuted cursors (separated from actual changing for flexibility)
 
-      #2.1.1 Determine time ranges between Rock-Eval cursors
-      tr.s1<-s.seq(1,sample[["Cursors"]]["curs1.1"])
-      tr.s2<-s.seq(sample[["Cursors"]]["curs1.1"],length(sample[["Pyrolysis"]][["t"]]))
+  #2.1 Apply function to converted list
+  list.converted<-lapply(list.converted, function(sample){
 
-      tr.s3CO<-s.seq(1,sample[["Cursors"]]["curs2.2"])
-      tr.s3COi<-s.seq(sample[["Cursors"]]["curs2.2"],length(sample[["Pyrolysis"]][["t"]]))
+    #2.1.1 Determine original cursor
+    curs.Geo<-sample[["Cursors"]][["curs3.2"]] #cursor predetermined in Geoworks
+    cursor.adj<-c(curs3.2=curs.Geo, certainty=9)
 
-      tr.s3CO2<-s.seq(1,sample[["Cursors"]]["curs3.2"])
-      tr.s3CO2i<-s.seq(sample[["Cursors"]]["curs3.2"],length(sample[["Pyrolysis"]][["t"]]))
+    #2.1.2 Check if right cycle for adjustment
+    if (sample[["Parameters"]]["CyclN"]=="SOIL" | sample[["Parameters"]]["CyclN"]=="SOIL TS") {
+      temp.curs<-ifelse(is.na(curs.Geo),NA,sample[["Pyrolysis"]][["T"]][curs.Geo])
 
-      tr.s4CO<-s.seq(1,sample[["Cursors"]]["curs5.2"])
-      tr.s4COi<-s.seq(sample[["Cursors"]]["curs5.2"],length(sample[["Oxidation"]][["t"]]))
+    #2.1.3 Check if original cursor is not already altered
+      if (temp.curs>=398 & temp.curs<=402 & !is.na(temp.curs)) {
 
-      tr.s4CO2<-s.seq(1,sample[["Cursors"]]["curs6.2"])
-      tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"],length(sample[["Oxidation"]][["t"]]))
+    #2.2 Determine adjusted cursor
 
-      #2.1.2 Compute the area between these cursors
-      S1<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s1],sample[["Pyrolysis"]][["CH"]][tr.s1])
-      S2<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s2],sample[["Pyrolysis"]][["CH"]][tr.s2])
+        #2.2.1 Determine pseudo-derivatives of the curve with varying lag (to exlcude random noise)
+        deriv1 <-diff(sample[["Pyrolysis"]][["CO2"]], lag = 1, differences=1)
+        deriv4 <-diff(sample[["Pyrolysis"]][["CO2"]], lag = 4, differences=1)
+        deriv10<-diff(sample[["Pyrolysis"]][["CO2"]], lag = 10, differences=1)
 
-      S3CO<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s3CO],sample[["Pyrolysis"]][["CO"]][tr.s3CO])
-      S3COi<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s3COi],sample[["Pyrolysis"]][["CO"]][tr.s3COi])
+        #2.2.2 Time steps where derivative is 0
+        ts.deriv1 <-which(rowSums(embed(sign(deriv1) ,1)) == 0)
+        ts.deriv4 <-which(rowSums(embed(sign(deriv4) ,1)) == 0)+2
+        ts.deriv10<-which(rowSums(embed(sign(deriv10),1)) == 0)+5
 
-      S3CO2<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s3CO2],sample[["Pyrolysis"]][["CO2"]][tr.s3CO2])
-      S3CO2i<-RE_traparea(sample[["Pyrolysis"]][["t"]][tr.s3CO2i],sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i])
+        #2.2.3 Determine the three lowest values within the time range where valley would be
+        tr.min<-s.seq(sample[["Cursors"]]["curs3.2"],sample[["Cursors"]]["curs3.3"])
+        ts.min<-head(order(sample[["Pyrolysis"]][["CO2"]][tr.min]),3)+sample[["Cursors"]]["curs3.2"]
 
-      S4CO<-RE_traparea(sample[["Oxidation"]][["t"]][tr.s4CO],sample[["Oxidation"]][["CO"]][tr.s4CO])
-      S4COi<-RE_traparea(sample[["Oxidation"]][["t"]][tr.s4COi],sample[["Oxidation"]][["CO"]][tr.s4COi])
+        #2.2.4 Optional plotting of cursor determination on curves
+        if(plot == TRUE){
+        plot(sample[["Pyrolysis"]][["CO2"]][300:1200],type="l",
+             xlab="Time", ylab="RE Signal CO2")
 
-      S4CO2<-RE_traparea(sample[["Oxidation"]][["t"]][tr.s4CO2],sample[["Oxidation"]][["CO2"]][tr.s4CO2])
-      S5<-RE_traparea(sample[["Oxidation"]][["t"]][tr.s5],sample[["Oxidation"]][["CO2"]][tr.s5])
+        #points(ts.deriv1-300,  sample[["Pyrolysis"]][["CO2"]][ts.deriv1],  col = "grey")
+        points(ts.deriv4-300,  sample[["Pyrolysis"]][["CO2"]][ts.deriv4],  col="grey")
+        points(ts.deriv10-300, sample[["Pyrolysis"]][["CO2"]][ts.deriv10], col="red3")
 
-      #2.1.3 Return the values as an addition to the original list
-      zones<-c(S1=S1, S2=S2,
-               S3CO=S3CO, S3COi=S3COi, S3CO2=S3CO2, S3CO2i=S3CO2i,
-               S4CO=S4CO, S4COi=S4COi, S4CO2=S4CO2, S5=S5)
-      sample[["Zones_C"]]<-zones
-      sample
-    })
+        points(ts.min-300,sample[["Pyrolysis"]][["CO2"]][ts.min], col="blue3", pch=15)
+        } # end of 3rd if
 
-list.extended
-}
+        #2.2.5 Check the certainty of the minimum to be a good fit
+        val1.check<- ts.min[1] %in% ts.deriv1 + ts.min[1] %in% ts.deriv4 + ts.min[1] %in% ts.deriv10
+        val2.check<- ts.min[2] %in% ts.deriv1 + ts.min[2] %in% ts.deriv4 + ts.min[2] %in% ts.deriv10
+        val3.check<- ts.min[3] %in% ts.deriv1 + ts.min[3] %in% ts.deriv4 + ts.min[3] %in% ts.deriv10
+
+        val.check<-c(val1.check,val2.check,val3.check)
+        val.select<-which.max(val.check)
+
+        ts.min<-ts.min[val.select]
+        cr.min<-val.check[val.select]
+
+        #2.2.6 Combine the adjsuted cursor and its certainty for output
+        cursor.adj<-c(curs3.2=ts.min, certainty=cr.min)
+
+            } # end of 2nd if
+    } # end of if
+
+    #2.2.7 Add updated cursor information to the list
+    sample[["cursor.adj"]]<-cursor.adj
+    sample
+
+  }) # end of apply
+
+  #3 Take the updated cursor info and give warning message if uncertain cursors are included.
+  list.values<-as.data.frame(
+    do.call(rbind, lapply(list.converted, function(sample)sample[["cursor.adj"]])))
+
+  uncertain.val<-which(list.values["certainty"]<2)
+
+  if(length(uncertain.val)>0){
+    warning(sprintf("Was unable to automatically determine a valley for minimum value with high certainty in item %i: %s. \n",
+                    uncertain.val,
+                    row.names(list.values)[uncertain.val]))
+  }
+
+  #4 Overwrite the old cursors with the new and remove the unnecessary cursor information from the list.
+  list.converted<-lapply(list.converted, function(sample){
+  sample[["Cursors"]][["curs3.2"]]<-sample[["cursor.adj"]][["curs3.2"]]
+  sample[["cursor.adj"]]<-NULL
+  sample
+  })
+
+  list.converted
+} # end of function
 
 
-# to do
-# -automated cursor adjust for pyr CO2
-# -but only for SOIL cycle
