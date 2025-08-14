@@ -8,7 +8,7 @@
 RE_extracttable<-function(list){
 
   #1 Definition of data in the list that is to be exported.
-  in.parameters<-c("Sample","Quant","CyclT")
+  in.parameters<-c("Sample","Quant","CyclN")
   nin.lists<-c("Parameters","Pyrolysis","Oxidation","Cursors","Calibration","Coefficients")
 
   #2 Extraction of data to be exported
