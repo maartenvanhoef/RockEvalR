@@ -11,6 +11,18 @@ RE_SebagIR(list)
 }
 \value{
 Computed indices from Sebag (2016)
+
+#' #' @section Parameter info:
+\itemize{
+\item A1  area of S2 between 200 and 340 C
+\item A2  area of S2 between 340 and 400 C
+\item A3  area of S2 between 400 and 460 C
+\item A4  area of S2 after 460 C
+\item AR  area of S2 after 400 C
+\item AS2 total S2 area
+\item I Sebag I parameter
+\item R Sebag R parameter
+}
 }
 \description{
 Calculates the areas A1, A2, A3, A4 plus the I and R indices.

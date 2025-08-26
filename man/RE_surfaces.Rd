@@ -4,7 +4,7 @@
 \alias{RE_surfaces}
 \title{Calculate the Rock-Eval surfaces}
 \usage{
-RE_surfaces(list, time.inlude = FALSE)
+RE_surfaces(list, time.include = FALSE)
 }
 \arguments{
 \item{list}{List with converted Rock-Eval data}

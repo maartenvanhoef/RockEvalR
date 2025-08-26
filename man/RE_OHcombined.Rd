@@ -15,3 +15,16 @@ The H and O flux at each time step
 \description{
 Combines the amount of H and O released of the different thermograms to calculate their respective fluxes over time.
 }
+\section{Parameter info}{
+
+\itemize{
+\item PH,  pyrolysis total H
+\item POO, pyrolysis organic O
+\item PIO, pyrolysis inorganic O
+\item PO,  pyrolysis total O
+\item ROO, residual organic O
+\item RIO, residual inorganic O
+\item RO,  residual total O
+}
+}
+

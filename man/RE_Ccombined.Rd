@@ -11,6 +11,16 @@ RE_Ccombined(list)
 }
 \value{
 Combined C flux at each time step
+
+#' @section Parameter info:
+\itemize{
+\item POC, pyrolysis organic C
+\item PIC, pyrolysis inorganic C
+\item PC,  pyrolysis total C
+\item ROC, residual organic C
+\item RIC, residual inorganic C
+\item RC,  residual total inorganic C
+}
 }
 \description{
 Combines the amount of C released of the different thermograms to calculate the flux of PC and RC over time.
