@@ -5,7 +5,7 @@
 #' @param list List with converted Rock-Eval data and zone areas
 #' @return Computed indices from Sebag (2016)
 #'
-#' #' #' @section Parameter info:
+#' @section Parameter info:
 #' \itemize{
 #' \item A1  area of S2 between 200 and 340 C
 #' \item A2  area of S2 between 340 and 400 C
@@ -219,7 +219,7 @@ list.extended
 #' @param list List with converted Rock-Eval data
 #' @return Combined C flux at each time step
 #'
-#' #' @section Parameter info:
+#' @section Parameter info:
 #' \itemize{
 #' \item POC, pyrolysis organic C
 #' \item PIC, pyrolysis inorganic C

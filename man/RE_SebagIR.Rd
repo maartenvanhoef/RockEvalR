@@ -11,8 +11,12 @@ RE_SebagIR(list)
 }
 \value{
 Computed indices from Sebag (2016)
+}
+\description{
+Calculates the areas A1, A2, A3, A4 plus the I and R indices.
+}
+\section{Parameter info}{
 
-#' #' @section Parameter info:
 \itemize{
 \item A1  area of S2 between 200 and 340 C
 \item A2  area of S2 between 340 and 400 C
@@ -24,9 +28,7 @@ Computed indices from Sebag (2016)
 \item R Sebag R parameter
 }
 }
-\description{
-Calculates the areas A1, A2, A3, A4 plus the I and R indices.
-}
+
 \references{
 Sebag, et al. (2016). Dynamics of soil organic matter based on new Rock-Eval indices. Geoderma, 284, 185-203.
 }
