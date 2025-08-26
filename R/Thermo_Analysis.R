@@ -4,6 +4,19 @@
 #'
 #' @param list List with converted Rock-Eval data and zone areas
 #' @return Computed indices from Sebag (2016)
+#'
+#' #' #' @section Parameter info:
+#' \itemize{
+#' \item A1  area of S2 between 200 and 340 C
+#' \item A2  area of S2 between 340 and 400 C
+#' \item A3  area of S2 between 400 and 460 C
+#' \item A4  area of S2 after 460 C
+#' \item AR  area of S2 after 400 C
+#' \item AS2 total S2 area
+#' \item I Sebag I parameter
+#' \item R Sebag R parameter
+#'}
+#'
 #' @references Sebag, et al. (2016). Dynamics of soil organic matter based on new Rock-Eval indices. Geoderma, 284, 185-203.
 #' @export
 RE_SebagIR<-function(list){
@@ -205,6 +218,17 @@ list.extended
 #'
 #' @param list List with converted Rock-Eval data
 #' @return Combined C flux at each time step
+#'
+#' #' @section Parameter info:
+#' \itemize{
+#' \item POC, pyrolysis organic C
+#' \item PIC, pyrolysis inorganic C
+#' \item PC,  pyrolysis total C
+#' \item ROC, residual organic C
+#' \item RIC, residual inorganic C
+#' \item RC,  residual total inorganic C
+#'}
+#'
 #' @export
 RE_Ccombined<-function(list){
   #1.1 make new list to be adapted from input
@@ -289,6 +313,18 @@ list.adapted
 #'
 #' @param list List with converted Rock-Eval data
 #' @return The H and O flux at each time step
+#'
+#' @section Parameter info:
+#' \itemize{
+#' \item PH,  pyrolysis total H
+#' \item POO, pyrolysis organic O
+#' \item PIO, pyrolysis inorganic O
+#' \item PO,  pyrolysis total O
+#' \item ROO, residual organic O
+#' \item RIO, residual inorganic O
+#' \item RO,  residual total O
+#'}
+#'
 #' @export
 RE_OHcombined<-function(list){
   #1.1 make new list to be adapted from input
@@ -300,18 +336,18 @@ RE_OHcombined<-function(list){
       seq(x,y,by=1)}
   }
 
-  #2 the total C in each oven is a simple addition
+  #2 the total O in each oven is a simple addition
   list.adapted<-lapply(list.adapted, function(sample){
     PH.t<-
-      sample[["Pyrolysis"]][["CH"]]*0.83/10
+      sample[["Pyrolysis"]][["CH"]]*0.17/10
 
     PO.t<-
-      sample[["Pyrolysis"]][["CO"]]*12/(28*10)+
-      sample[["Pyrolysis"]][["CO2"]]*12/(44*10)
+      sample[["Pyrolysis"]][["CO"]]*16/(28*10)+
+      sample[["Pyrolysis"]][["CO2"]]*32/(44*10)
 
     RO.t<-
-      sample[["Oxidation"]][["CO"]]*12/(28*10)+
-      sample[["Oxidation"]][["CO2"]]*12/(44*10)
+      sample[["Oxidation"]][["CO"]]*16/(28*10)+
+      sample[["Oxidation"]][["CO2"]]*32/(44*10)
 
     #3 the separation between organic and inorganic varies for the different curves (S1, S2, S3, ...)
 
@@ -332,8 +368,8 @@ RE_OHcombined<-function(list){
     tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"]+1,length(sample[["Oxidation"]][["t"]]))
 
     #3.1.2 Compute the C flux between these cursors
-    S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.17/10
-    S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.17/10
+    # S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.17/10
+    # S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.17/10
 
     S3CO.t<-sample[["Pyrolysis"]][["CO"]][tr.s3CO]*16/(28*10)
     S3COi.t<-sample[["Pyrolysis"]][["CO"]][tr.s3COi]*16/(28*10)
@@ -348,7 +384,7 @@ RE_OHcombined<-function(list){
     S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*32/(44*10)
 
     #3.1.4 Combine the separated curves over the whole time range
-    POH.t<-c(S1.t,S2.t)
+    # POH.t<-c(S1.t,S2.t)
     POO.t<-c(S3CO.t,S3COi.t/2)+c(S3CO2.t,S3CO2i.t*0)
     PIO.t<-c(S3CO.t*0,S3COi.t/2)+c(S3CO2.t*0,S3CO2i.t)
 
@@ -356,7 +392,7 @@ RE_OHcombined<-function(list){
     RIO.t<-c(S4CO.t*0,S4COi.t)+c(S4CO2.t*0,S5.t)
 
 
-    values.P<-data.frame(POH=POH.t, PH=PH.t,
+    values.P<-data.frame(PH=PH.t,
                          POO=POO.t, PIO=PIO.t, PO=PO.t)
     values.O<-data.frame(ROO=ROO.t, RIO=RIO.t, RO=RO.t)
 

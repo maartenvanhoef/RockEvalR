@@ -55,11 +55,11 @@ table<-RE_extracttable(REdata.adj)
 # Specific data can be extracted with apply (or a for loop), e.g.:
 
 #Extract zones
-REzones<-as.data.frame(t(sapply(REdata_adj,
+REzones<-as.data.frame(t(sapply(REdata.adj,
                                 function(sample)sample[["Zones_C"]])))
 
 #Extract data of single pyrogram
-REpyro<-REdata_adj[[1]][["Pyrolysis"]]
+REpyro<-REdata.adj[[1]][["Pyrolysis"]]
 par(mfrow = c(1,1))
 plot(REpyro$t,REpyro$CO2,
      xlab="Time (s)", ylab="Pyro CO2 mg/g/s", main="example plot", type="l")
