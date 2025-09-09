@@ -54,7 +54,7 @@ RE_read <- function(dataloc){
 
       #2.2.7 description of the lines to cut for cursors
       file.i.rc1<-which(str_detect(file.i,"Curs manu_1")) #row Curs start
-      file.i.rc2<-which(str_detect(file.i,"Calibration:Geoworks"))-2 #row Curs end
+      file.i.rc2<-which(str_detect(file.i,"Curs manu_7"))+6 #row Curs end
 
       #2.2.8 extract cursors
       file.i.curs<-file.i[file.i.rc1:file.i.rc2]
