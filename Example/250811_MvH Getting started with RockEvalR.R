@@ -36,7 +36,7 @@ REdata.adj<-RE_convert(REdata)
 
 #5 Adjust the pyrolysis CO2 cursor 2 to the valley between OC and IC peaks (only for SOIL and SOIL TS cycles)
 #  By default this cursor is fixed at 400C, this is an optional adjustment to the minimum
-REdata.adj<-RE_cursadjust(REdata, plot = F)
+REdata.adj<-RE_cursadjust(REdata.adj, plot = F)
 
 #6 Remove unconverted data (if no longer needed)
 rm(REdata)
@@ -55,7 +55,7 @@ REdata.adj<-RE_Ccombined(REdata.adj)
 #10 Determine Sebag et al. (2016) parameters
 REdata.adj<-RE_SebagIR(REdata.adj)
 
-#11.1 Calculate T percentiles
+#11.1 Calculate T percentiles (i.e., T25, T50, and T75)
 REdata.adj<-RE_Tpercentiles(REdata.adj)
 
 #11.2 Standard percentiles are T25, T50 and T75 but any custom vector can be used as:
