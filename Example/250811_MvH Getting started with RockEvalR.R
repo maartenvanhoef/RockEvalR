@@ -1,3 +1,6 @@
+
+###### Setting up R for using RockEvalR ######
+
 # Clear environment if needed
 rm(list=ls())
 
@@ -12,12 +15,26 @@ devtools::install_github("maartenvanhoef/RockEvalR")
 library(tidyverse)
 library(RockEvalR)
 
-# Access overview help page of package like:
-??RockEvalR
-help(package="RockEvalR")
 
-# Access help page of a function like:
+
+
+###### Getting help with RockEvalR ######
+
+
+# Access the package overview page like:
+?RockEvalR
+
+# An index of all functions and help pages by:
+help(package=RockEvalR)
+
+# Or a access a specific function's help page like:
 ?RE_Ccombined()
+
+
+
+
+###### Basic use of RockEvalR ######
+
 
 #1 Location of your RE data
 dataloc<-"e.g. C:/.../BULK ROCK"
