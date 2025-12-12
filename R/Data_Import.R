@@ -7,6 +7,19 @@
 #'
 #' @param dataloc Path to the input file
 #' @return A list of the files in dataloc.
+#'
+#' @section How to use:
+#' Before using any function the raw Rock-Eval data need to be read into the right format.
+#' This format is a list that contains a list for each sample with all appropriate data.
+#'
+#' This function will read all files in the indicated data location. It's important only raw Rock-Eval data are stored in that location.
+#' The function will only use .B00 files, .B00~ files are ignored.
+#'
+#' If data are erroneously read this may result from parameters missing, parameters being in an unexpected location in the file, or from additional unexpected data being part of the file.
+#' This can usually be helped by reading the fresh raw data (e.g., the .B00~ file) into an updated version of Geoworks.
+#'
+#' Reading of data files after Geoworks conversion was last checked for version: V1.8R1.
+#'
 #' @export
 RE_read <- function(dataloc){
 

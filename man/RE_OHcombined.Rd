@@ -15,16 +15,23 @@ The H and O flux at each time step
 \description{
 Combines the amount of H and O released of the different thermograms to calculate their respective fluxes over time.
 }
+\section{How to use}{
+
+This function calculates the amount of released H and O at every time step (instead of integrating it over an entire period).
+The input needs to be data converted to the right units by using the function RE_convert().
+The H and O released during pyrolysis originate from the sample, whereas the O released during oxidation also originates from the air in the oven.
+}
+
 \section{Parameter info}{
 
 \itemize{
-\item PH,  pyrolysis total H
-\item POO, pyrolysis organic O
-\item PIO, pyrolysis inorganic O
-\item PO,  pyrolysis total O
-\item ROO, residual organic O
-\item RIO, residual inorganic O
-\item RO,  residual total O
+\item PH,  pyrolysis total H (mg H/ g / s)
+\item POO, pyrolysis organic O (mg O/ g / s)
+\item PIO, pyrolysis inorganic O (mg O/ g / s)
+\item PO,  pyrolysis total O (mg O/ g / s)
+\item ROO, residual organic O (mg O/ g / s)
+\item RIO, residual inorganic O (mg O/ g / s)
+\item RO,  residual total O (mg O/ g / s)
 }
 }
 

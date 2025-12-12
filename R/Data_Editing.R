@@ -52,6 +52,12 @@ RE_cumtraparea<-function(x,y){
 #'
 #' @param list List with raw Rock-Eval data from RE_read
 #' @return Input list with Rock-Eval thermograms in proper units (mg/g)
+#'
+#' @section How to use:
+#' It is important to convert the thermogram data to the right units, before using most other functions.
+#' This function performs the conversion using the callibration values and baseline.
+#' The input data should be the list of raw data files which is read by the function RE_read(dataloc).
+#'
 #' @export
 RE_convert<-function(list){
   #1.1 Create new converted list as copy of input list
@@ -169,12 +175,17 @@ list.converted
 
 #' Cursor adjustment for soil cycle
 #'
-#' This function adjusts the unaltered pyrolysis CO2 cursor which separates organic and inorganic C. By default this value is fixed at 400 C in Geoworks, however, for soils the valley between the two peaks may be more appropriate.
-#' The function alter only the samples that are run with the SOIL or SOIL TS cycle and only samples that have their cursor not manually adjusted already.
+#' This function adjusts the unaltered pyrolysis CO2 cursor which separates organic and inorganic C.
+#' The function alters only the samples that are run with the SOIL or SOIL TS cycle and only samples that have their cursor not manually adjusted already.
 #'
 #' @param list List with raw Rock-Eval data from RE_read
 #' @param plot Create plot of cursor determination TRUE or FALSE
 #' @return List with adjusted pyrolysis CO2 cursor
+#'
+#' @section How to use:
+#' A separation between organic and inorganic CO2 is made based on a temperature cut-off. By default this value is fixed at 400 C in Geoworks, however, for soils the valley between the two peaks may be more appropriate.
+#' Adjusting the temperature cut-off to the local minimum between the organic and inorganic peak may result in a more appropriate calculation of TOC and TIC.
+#'
 #' @export
 RE_cursadjust<-function(list, plot=FALSE){
 

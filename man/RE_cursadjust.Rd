@@ -15,6 +15,12 @@ RE_cursadjust(list, plot = FALSE)
 List with adjusted pyrolysis CO2 cursor
 }
 \description{
-This function adjusts the unaltered pyrolysis CO2 cursor which separates organic and inorganic C. By default this value is fixed at 400 C in Geoworks, however, for soils the valley between the two peaks may be more appropriate.
-The function alter only the samples that are run with the SOIL or SOIL TS cycle and only samples that have their cursor not manually adjusted already.
+This function adjusts the unaltered pyrolysis CO2 cursor which separates organic and inorganic C.
+The function alters only the samples that are run with the SOIL or SOIL TS cycle and only samples that have their cursor not manually adjusted already.
 }
+\section{How to use}{
+
+A separation between organic and inorganic CO2 is made based on a temperature cut-off. By default this value is fixed at 400 C in Geoworks, however, for soils the valley between the two peaks may be more appropriate.
+Adjusting the temperature cut-off to the local minimum between the organic and inorganic peak may result in a more appropriate calculation of TOC and TIC.
+}
+

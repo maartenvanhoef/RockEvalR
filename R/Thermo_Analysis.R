@@ -5,6 +5,9 @@
 #' @param list List with converted Rock-Eval data and zone areas
 #' @return Computed indices from Sebag (2016)
 #'
+#' @section How to use:
+#' Before using this function the data need to be converted to the right units by using the function RE_convert().
+#'
 #' @section Parameter info:
 #' \itemize{
 #' \item A1  area of S2 between 200 and 340 C
@@ -80,6 +83,12 @@ list.extended
 #' @param list List with converted Rock-Eval data and zone areas
 #' @param vector Vector with the percentiles to be calculated
 #' @return Temperature percentiles
+#'
+#' @section How to use:
+#' Before using this function the data need to be converted to the right units by using the function RE_convert() and the Rock-Eval zones need to be calculated with the function RE_surfaces().
+#' From these surfaces the temperature at which the given percentiles have been reached is derived (e.g., S3CO2-T50 is the temperature at which 50% of the S3CO2 has been pyrolysed).
+#' Default percentiles are 25,50,75 but any vector containing numeric values can be used for this calculation.
+#'
 #' @export
 RE_Tpercentiles<-function(list,vector=c(25,50,75)){
 
@@ -219,14 +228,19 @@ list.extended
 #' @param list List with converted Rock-Eval data
 #' @return Combined C flux at each time step
 #'
+#' @section How to use:
+#' This function calculates the amount of released C at every time step (instead of integrating it over an entire period).
+#' The input needs to be data converted to the right units by using the function RE_convert().
+#'
+#'
 #' @section Parameter info:
 #' \itemize{
-#' \item POC, pyrolysis organic C
-#' \item PIC, pyrolysis inorganic C
-#' \item PC,  pyrolysis total C
-#' \item ROC, residual organic C
-#' \item RIC, residual inorganic C
-#' \item RC,  residual total inorganic C
+#' \item POC, pyrolysis organic C (mg C/ g / s)
+#' \item PIC, pyrolysis inorganic C (mg C/ g / s)
+#' \item PC,  pyrolysis total C (mg C/ g / s)
+#' \item ROC, residual organic C (mg C/ g / s)
+#' \item RIC, residual inorganic C (mg C/ g / s)
+#' \item RC,  residual total inorganic C (mg C/ g / s)
 #'}
 #'
 #' @export
@@ -314,15 +328,20 @@ list.adapted
 #' @param list List with converted Rock-Eval data
 #' @return The H and O flux at each time step
 #'
+#' @section How to use:
+#' This function calculates the amount of released H and O at every time step (instead of integrating it over an entire period).
+#' The input needs to be data converted to the right units by using the function RE_convert().
+#' The H and O released during pyrolysis originate from the sample, whereas the O released during oxidation also originates from the air in the oven.
+#'
 #' @section Parameter info:
 #' \itemize{
-#' \item PH,  pyrolysis total H
-#' \item POO, pyrolysis organic O
-#' \item PIO, pyrolysis inorganic O
-#' \item PO,  pyrolysis total O
-#' \item ROO, residual organic O
-#' \item RIO, residual inorganic O
-#' \item RO,  residual total O
+#' \item PH,  pyrolysis total H (mg H/ g / s)
+#' \item POO, pyrolysis organic O (mg O/ g / s)
+#' \item PIO, pyrolysis inorganic O (mg O/ g / s)
+#' \item PO,  pyrolysis total O (mg O/ g / s)
+#' \item ROO, residual organic O (mg O/ g / s)
+#' \item RIO, residual inorganic O (mg O/ g / s)
+#' \item RO,  residual total O (mg O/ g / s)
 #'}
 #'
 #' @export

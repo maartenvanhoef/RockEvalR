@@ -15,6 +15,11 @@ Computed indices from Sebag (2016)
 \description{
 Calculates the areas A1, A2, A3, A4 plus the I and R indices.
 }
+\section{How to use}{
+
+Before using this function the data need to be converted to the right units by using the function RE_convert().
+}
+
 \section{Parameter info}{
 
 \itemize{

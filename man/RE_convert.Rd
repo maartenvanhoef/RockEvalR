@@ -15,3 +15,10 @@ Input list with Rock-Eval thermograms in proper units (mg/g)
 \description{
 This function derives the elemental amount using calibration, baseline and sample weight.
 }
+\section{How to use}{
+
+It is important to convert the thermogram data to the right units, before using most other functions.
+This function performs the conversion using the callibration values and baseline.
+The input data should be the list of raw data files which is read by the function RE_read(dataloc).
+}
+

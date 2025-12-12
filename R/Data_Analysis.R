@@ -1,10 +1,31 @@
 #' Calculate the Rock-Eval surfaces
 #'
-#' This function calculates the areas of the different Rock-Eval zones. Input should be converted already. As an option the zones can also be included as a timeseries.
+#' This function calculates the areas of the different Rock-Eval zones. Input should be converted already. As an option the zones can also be included as a time series.
 #'
 #' @param list List with converted Rock-Eval data
 #' @param time.include Include the curves as individual time series TRUE/FALSE
 #' @return Input list with included areas of Rock-Eval zones
+#'
+#' @section How to use:
+#' It is important that first the data have been converted to the right units (by calibration values) and that the baseline is set to 0.
+#' Converting the raw measurements to prober units and baselined values can be done with the RE_convert() function.
+#' This function integrates the different thermograms for C. Integration happens between the cursors that were determined automatically or manually adjusted.
+#' The cursors are normally determined by Geoworks. Manual adjustment of the S3 organic-inorganic separation for the soil program can be done with the RE_cursadjust() function.
+#'
+#' @section Parameter info:
+#' \itemize{
+#' \item S1, Free hydrocarbons (mg HC/g)
+#' \item S2, Pyrolysable hydrocarbons (mg HC/g)
+#' \item S3CO, Pyrolysable organic CO (mg CO/g)
+#' \item S3COi, Pyrolysable inorganic CO (mg CO/g)
+#' \item S3CO2, Pyrolysable organic CO2 (mg CO2/g)
+#' \item S3CO2i, Pyrolysable organic CO2 (mg CO2/g)
+#' \item S4CO, Oxidised organic CO (mg CO/g)
+#' \item S4COi, Oxidised inorganic CO (mg CO/g)
+#' \item S4CO2, Oxidised organic CO2 (mg CO2/g)
+#' \item S5, Oxidised inorganic CO2 (mg CO2/g)
+#'}
+#'
 #' @export
 RE_surfaces<-function(list, time.include=FALSE){
   # Uses the weight converted values which is slightly different from Geoworks
@@ -118,9 +139,14 @@ RE_surfaces<-function(list, time.include=FALSE){
 #' Calculate Rock-Eval metrics
 #'
 #' This function calculates main Rock-Eval metrics from zone areas.
-#'
+#' #'
 #' @param list List with converted Rock-Eval data and zone areas
 #' @return Computed Rock-Eval metrics
+#'
+#' @section How to use:
+#' It is necessary that the RE surfaces have been integrated first.
+#' This can be done with the RE_surfaces() function.
+#' From these areas the basic Rock-Eval metrics are computed.
 #'
 #' @section Parameter info:
 #' \itemize{

@@ -12,8 +12,11 @@ devtools::install_github("maartenvanhoef/RockEvalR")
 library(tidyverse)
 library(RockEvalR)
 
-# Access help page
+# Access overview help page of package like:
 ??RockEvalR
+
+# Access help page of a function like:
+?RE_Ccombined()
 
 #1 Location of your RE data
 dataloc<-"e.g. C:/.../BULK ROCK"
