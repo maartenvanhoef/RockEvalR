@@ -14,6 +14,7 @@ library(RockEvalR)
 
 # Access overview help page of package like:
 ??RockEvalR
+help(package="RockEvalR")
 
 # Access help page of a function like:
 ?RE_Ccombined()
