@@ -7,6 +7,12 @@
 #' @param oven Choice of pyrolysis or oxidation oven
 #' @param thermogram Choice of selected thermogram
 #' @return A plot of thermogram(s)
+#'
+#' @section How to use:
+#' This function allows for basic plotting of the raw data and cursors + baselines.
+#' First data needs to be read into the right format by using the RE_read() function.
+#' By default all the thermograms are shown, but the oven and type of thermogram are manually adjustable.
+#'
 #' @export
 RE_plot <- function(datalist, analysis, oven="both", thermogram="all"){
 

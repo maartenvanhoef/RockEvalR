@@ -17,3 +17,10 @@ Temperature percentiles
 \description{
 Calculates the temperature percentiles of the thermograms
 }
+\section{How to use}{
+
+Before using this function the data need to be converted to the right units by using the function RE_convert() and the Rock-Eval zones need to be calculated with the function RE_surfaces().
+From these surfaces the temperature at which the given percentiles have been reached is derived (e.g., S3CO2-T50 is the temperature at which 50\% of the S3CO2 has been pyrolysed).
+Default percentiles are 25,50,75 but any vector containing numeric values can be used for this calculation.
+}
+

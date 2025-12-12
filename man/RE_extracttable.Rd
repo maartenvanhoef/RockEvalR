@@ -15,3 +15,8 @@ Simplest possible data type containing requested data
 \description{
 Creates a table with all calculated metrics added to the data.
 }
+\section{How to use}{
+
+When all parameters of interest have been calculated, this function will convert the list of samples into a single data.frame for further analysis.
+}
+

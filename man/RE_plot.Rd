@@ -21,3 +21,10 @@ A plot of thermogram(s)
 \description{
 This function previews Rock-Eval thermograms and cursors. Input contains a single Rock-Eval analysis.
 }
+\section{How to use}{
+
+This function allows for basic plotting of the raw data and cursors + baselines.
+First data needs to be read into the right format by using the RE_read() function.
+By default all the thermograms are shown, but the oven and type of thermogram are manually adjustable.
+}
+

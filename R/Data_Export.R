@@ -4,6 +4,10 @@
 #'
 #' @param list List with converted and extended Rock-Eval data
 #' @return Simplest possible data type containing requested data
+#'
+#' @section How to use:
+#' When all parameters of interest have been calculated, this function will convert the list of samples into a single data.frame for further analysis.
+#'
 #' @export
 RE_extracttable<-function(list){
 

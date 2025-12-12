@@ -15,15 +15,21 @@ Combined C flux at each time step
 \description{
 Combines the amount of C released of the different thermograms to calculate the flux of PC and RC over time.
 }
+\section{How to use}{
+
+This function calculates the amount of released C at every time step (instead of integrating it over an entire period).
+The input needs to be data converted to the right units by using the function RE_convert().
+}
+
 \section{Parameter info}{
 
 \itemize{
-\item POC, pyrolysis organic C
-\item PIC, pyrolysis inorganic C
-\item PC,  pyrolysis total C
-\item ROC, residual organic C
-\item RIC, residual inorganic C
-\item RC,  residual total inorganic C
+\item POC, pyrolysis organic C (mg C/ g / s)
+\item PIC, pyrolysis inorganic C (mg C/ g / s)
+\item PC,  pyrolysis total C (mg C/ g / s)
+\item ROC, residual organic C (mg C/ g / s)
+\item RIC, residual inorganic C (mg C/ g / s)
+\item RC,  residual total inorganic C (mg C/ g / s)
 }
 }
 

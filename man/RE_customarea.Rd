@@ -20,5 +20,6 @@ Input list with included areas of Rock-Eval zones
 }
 \description{
 This function calculates the areas between a set of temperatures. Input should be converted already.
-The areas between all temperatures is given plus the area between 0 and the first temperature and the area after the highest temperature is reached.
+The areas between all temperatures is given plus the area between t0 and the first temperature and the area after the highest temperature is reached.
+All output parameters have the same units as their fully integrated counterparts.
 }
