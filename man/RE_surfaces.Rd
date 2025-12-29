@@ -20,7 +20,7 @@ This function calculates the areas of the different Rock-Eval zones. Input shoul
 \section{How to use}{
 
 It is important that first the data have been converted to the right units (by calibration values) and that the baseline is set to 0.
-Converting the raw measurements to prober units and baselined values can be done with the RE_convert() function.
+Converting the raw measurements to proper units and baselined values can be done with the RE_convert() function.
 This function integrates the different thermograms for C. Integration happens between the cursors that were determined automatically or manually adjusted.
 The cursors are normally determined by Geoworks. Manual adjustment of the S3 organic-inorganic separation for the soil program can be done with the RE_cursadjust() function.
 }
@@ -41,3 +41,6 @@ The cursors are normally determined by Geoworks. Manual adjustment of the S3 org
 }
 }
 
+\references{
+Disnar, et al. (2003). Soil organic matter (SOM) characterization by Rock-Eval pyrolysis: scope and limitations. Organic Geochemistry, 34 (3).
+}

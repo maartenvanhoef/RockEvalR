@@ -8,7 +8,7 @@
 #'
 #' @section How to use:
 #' It is important that first the data have been converted to the right units (by calibration values) and that the baseline is set to 0.
-#' Converting the raw measurements to prober units and baselined values can be done with the RE_convert() function.
+#' Converting the raw measurements to proper units and baselined values can be done with the RE_convert() function.
 #' This function integrates the different thermograms for C. Integration happens between the cursors that were determined automatically or manually adjusted.
 #' The cursors are normally determined by Geoworks. Manual adjustment of the S3 organic-inorganic separation for the soil program can be done with the RE_cursadjust() function.
 #'
@@ -26,6 +26,8 @@
 #' \item S5, Oxidised inorganic CO2 (mg CO2/g)
 #'}
 #'
+#' @references
+#' Disnar, et al. (2003). Soil organic matter (SOM) characterization by Rock-Eval pyrolysis: scope and limitations. Organic Geochemistry, 34 (3).
 #' @export
 RE_surfaces<-function(list, time.include=FALSE){
   # Uses the weight converted values which is slightly different from Geoworks
@@ -139,14 +141,14 @@ RE_surfaces<-function(list, time.include=FALSE){
 #' Calculate Rock-Eval metrics
 #'
 #' This function calculates main Rock-Eval metrics from zone areas.
-#' #'
+#'
 #' @param list List with converted Rock-Eval data and zone areas
 #' @return Computed Rock-Eval metrics
 #'
 #' @section How to use:
 #' It is necessary that the RE surfaces have been integrated first.
 #' This can be done with the RE_surfaces() function.
-#' From these areas the basic Rock-Eval metrics are computed.
+#' From these areas the basic Rock-Eval metrics are then computed.
 #'
 #' @section Parameter info:
 #' \itemize{

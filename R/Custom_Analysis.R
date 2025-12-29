@@ -9,6 +9,15 @@
 #' @param thermogram Must be one of the columns of the oven data, e.g., CO2
 #' @param vector Vector containing temperature intervals (excluding 0 and max)
 #' @return Input list with included areas of Rock-Eval zones
+#'
+#' @section How to use:
+#' It is important that first the data have been converted to the right units (by calibration values) and that the baseline is set to 0.
+#' Converting the raw measurements to proper units and baselined values can be done with the RE_convert() function.
+#' This function integrates any thermograms. Integration happens between the temperatures that are given as a vector argument in the function.
+#' The lowest temperature and highest temperatures should not be included in the argument vector.
+#' So vector c(300,450,500) will result in the integration: T < 300, T 300-450, T 450-500, and T > 500.
+#'
+#'
 #' @export
 RE_customarea<-function(list,oven,thermogram,temperatures){
   #1.1 take list to extend

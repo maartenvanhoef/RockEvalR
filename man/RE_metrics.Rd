@@ -14,13 +14,12 @@ Computed Rock-Eval metrics
 }
 \description{
 This function calculates main Rock-Eval metrics from zone areas.
-#'
 }
 \section{How to use}{
 
 It is necessary that the RE surfaces have been integrated first.
 This can be done with the RE_surfaces() function.
-From these areas the basic Rock-Eval metrics are computed.
+From these areas the basic Rock-Eval metrics are then computed.
 }
 
 \section{Parameter info}{

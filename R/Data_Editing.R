@@ -216,7 +216,7 @@ RE_cursadjust<-function(list, plot=FALSE){
 
     #2.2 Determine adjusted cursor
 
-        #2.2.1 Determine pseudo-derivatives of the curve with varying lag (to exlcude random noise)
+        #2.2.1 Determine pseudo-derivatives of the curve with varying lag (to exclude random noise)
         deriv1 <-diff(sample[["Pyrolysis"]][["CO2"]], lag = 1, differences=1)
         deriv4 <-diff(sample[["Pyrolysis"]][["CO2"]], lag = 4, differences=1)
         deriv10<-diff(sample[["Pyrolysis"]][["CO2"]], lag = 10, differences=1)
