@@ -49,5 +49,6 @@ Here the areas and nomenclature of Cohen-Sadon et al. (2022) are used instead of
 
 \references{
 Cohen-Sadon, et al. (2022). A new empirical approach for rapid quantification of organic and pyritic sulphur in sedimentary rocks using the Rock-Eval 7S. Organic Geochemistry, 166, 104350.
+
 Aboussou (2018). New Rock-Eval method for Pyritic and Organic Sulphur quantification: Application to study Organic matter preservation in Jurassic sediments. Earth Sciences, Sorbonne Université.
 }

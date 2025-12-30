@@ -54,9 +54,11 @@ In this case total organic S is calculated from a relationship with the Tmax_S d
 
 \references{
 Cohen-Sadon, et al. (2022). A new empirical approach for rapid quantification of organic and pyritic sulphur in sedimentary rocks using the Rock-Eval 7S. Organic Geochemistry, 166, 104350.
+
 Aboussou (2018). New Rock-Eval method for Pyritic and Organic Sulphur quantification: Application to study Organic matter preservation in Jurassic sediments. Earth Sciences, Sorbonne Université.
+
 Cohen-Sadon, et al. (2025). Tmax-S: A new proxy for the role of sulphur on sedimentary organic matter preservation and thermal maturation. Journal of Analytical and Applied Pyrolysis 190 - 107115.
 }
 \seealso{
-\code{\link[=RE_Surfaces]{RE_Surfaces()}}
+\code{\link[=RE_surfaces]{RE_surfaces()}}
 }

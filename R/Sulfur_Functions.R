@@ -32,6 +32,7 @@
 #'
 #' @references
 #' Cohen-Sadon, et al. (2022). A new empirical approach for rapid quantification of organic and pyritic sulphur in sedimentary rocks using the Rock-Eval 7S. Organic Geochemistry, 166, 104350.
+#'
 #' Aboussou (2018). New Rock-Eval method for Pyritic and Organic Sulphur quantification: Application to study Organic matter preservation in Jurassic sediments. Earth Sciences, Sorbonne Université.
 #' @export
 RE_Ssurfaces<-function(list, time.include=FALSE){
@@ -51,7 +52,8 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
 
     #2.1.1 Determine the lowest value within the time range where minima need to be determined
     tr.min.s2S<-which(sample[["Pyrolysis"]]["T"] >= 475 &
-                  sample[["Pyrolysis"]]["T"] <= 550)
+                      sample[["Pyrolysis"]]["T"] <= 550 &
+                      sample[["Pyrolysis"]]["t"] < sample[["Cursors"]]["curs4.3"])
 
     ts.min.s2S<-which.min(sample[["Pyrolysis"]][["SO2"]][tr.min.s2S])+which.max(sample[["Pyrolysis"]]["T"] >= 475)
 
@@ -71,9 +73,9 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
     tr.s3S<-which(sample[["Pyrolysis"]]["t"] >= ts.min.s2S)
 
 
-    tr.s4S<-which(sample[["Oxidation"]]["T"] <= ts.min.s4S)
+    tr.s4S<-which(sample[["Oxidation"]]["t"] <= ts.min.s4S)
 
-    tr.s5S<-which(sample[["Oxidation"]]["T"] >= ts.min.s4S)
+    tr.s5S<-which(sample[["Oxidation"]]["t"] >= ts.min.s4S)
 
 
     #2.1.3 Compute the area between these cut-offs
@@ -88,7 +90,7 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
 
 
     #2.1.3 Return the values as an addition to the original list
-    zones<-c(S1=S1S, S2=S2S, S3S=S3S,
+    zones<-c(S1S=S1S, S2S=S2S, S3S=S3S,
              S4S=S4S, S5S=S5S)
     sample[["Zones_S"]]<-zones
 
@@ -170,11 +172,13 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
 #' \item SI.pyr, labile sulphur index (mg pyrolysed org. S/ g TOC)
 #'}
 #'
-#' @seealso [RE_Surfaces()]
+#' @seealso [RE_surfaces()]
 #'
 #' @references
 #' Cohen-Sadon, et al. (2022). A new empirical approach for rapid quantification of organic and pyritic sulphur in sedimentary rocks using the Rock-Eval 7S. Organic Geochemistry, 166, 104350.
+#'
 #' Aboussou (2018). New Rock-Eval method for Pyritic and Organic Sulphur quantification: Application to study Organic matter preservation in Jurassic sediments. Earth Sciences, Sorbonne Université.
+#'
 #' Cohen-Sadon, et al. (2025). Tmax-S: A new proxy for the role of sulphur on sedimentary organic matter preservation and thermal maturation. Journal of Analytical and Applied Pyrolysis 190 - 107115.
 #'
 #' @export
@@ -192,13 +196,14 @@ RE_Smetrics<-function(list, org.conversion.a=-0.75, org.conversion.b=380){
 
     #2.1 Temperature parameters
     tr.min.s2S<-which(sample[["Pyrolysis"]]["T"] >= 475 &
-                        sample[["Pyrolysis"]]["T"] <= 550)
+                      sample[["Pyrolysis"]]["T"] <= 550 &
+                      sample[["Pyrolysis"]]["t"] < sample[["Cursors"]]["curs4.3"])
 
     ts.min.s2S<-which.min(sample[["Pyrolysis"]][["SO2"]][tr.min.s2S])+which.max(sample[["Pyrolysis"]]["T"] >= 475)
 
     tr.Tpeak_S<-which(sample[["Pyrolysis"]]["t"] <= ts.min.s2S)
 
-    ts.Tpeak_S<-which.max(sample[["Pyrolysis"]]["SO2"][tr.Tpeak_S])
+    ts.Tpeak_S<-which.max(sample[["Pyrolysis"]][["SO2"]][tr.Tpeak_S])
 
     Tpeak_S<-sample[["Pyrolysis"]][["T"]][ts.Tpeak_S]
     Tpeak_S<-ifelse(is.null(Tpeak_S),NA,Tpeak_S)
@@ -212,15 +217,19 @@ RE_Smetrics<-function(list, org.conversion.a=-0.75, org.conversion.b=380){
 
     #2.3 Residual (oxidised) total sulphur
     RTS<-sample[["Zones_S"]][["S4S"]]/10+
-         sample[["Zones_S"]][["S5S"]]/10+
+         sample[["Zones_S"]][["S5S"]]/10
 
     #2.4 Total sulphur (both ovens)
     TS<-POS+PIS+RTS
 
     #2.5 Empirically corrected organic sulphur species
-    PyOS.emp<-org.conversion.a*POS + org.conversion.b
+    PyOS.emp<-org.conversion.a*Tpeak_S + org.conversion.b
+    PyOS.emp<-ifelse(PyOS.emp>100,NA,PyOS.emp)
+    PyOS.emp<-ifelse(PyOS.emp<1,NA,PyOS.emp)
+
     TOS.cor<-POS*100/(PyOS.emp)
     ROS.cor<-TOS.cor-POS
+    ROS.cor<-ifelse(ROS.cor<0,0,ROS.cor)
 
     #2.6 Emperically corrected inorganic sulphur species
     TIS.cor<-TS-TOS.cor
@@ -228,8 +237,8 @@ RE_Smetrics<-function(list, org.conversion.a=-0.75, org.conversion.b=380){
 
 
     #2.7 Sulphur index
-    SI<-TOS.cor/sample[["Metrics_C"]]["TOC"]*100
-    SI.pyr<-POS/sample[["Metrics_C"]]["TOC"]*100
+    SI<-TOS.cor/sample[["Metrics_C"]][["TOC"]]*100
+    SI.pyr<-POS/sample[["Metrics_C"]][["TOC"]]*100
 
 
     #3 Grouping all parameters and returning to the original list
