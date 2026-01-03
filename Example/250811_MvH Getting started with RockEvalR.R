@@ -82,14 +82,26 @@ REdata.adj<-RE_Tpercentiles(REdata.adj)
 #11.2 Standard percentiles are T25, T50 and T75 but any custom vector can be used as:
 REdata.adj<-RE_Tpercentiles(REdata.adj, c(10,30,50,70,90))
 
+
+## Sulphur interpretation can be done using similar functions to C ----
+
+#12.1 Compute surfaces
+REdata.adj<-RE_Ssurfaces(REdata.adj)
+
+#12.2 Derive metrics for S
+REdata.adj<-RE_Smetrics(REdata.adj)
+
+# The sulphur metrics often depend on empirical corrections so it is adviced to read the functions help page before use.
+?RE_Smetrics()
+
 ## Extracting data from the list ----
 
-#12 All data can be extracted into a neat table at once with
+#13 All data can be extracted into a neat table at once with
 table<-RE_extracttable(REdata.adj)
 
 
 
-#13 Specific data can be extracted manually with apply (or a for loop), e.g.:
+#14 Specific data can be extracted manually with apply (or a for loop), e.g.:
 
 #Extract zones
 REzones<-as.data.frame(t(sapply(REdata.adj,

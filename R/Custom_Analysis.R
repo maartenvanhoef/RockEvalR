@@ -7,7 +7,7 @@
 #' @param list List with converted Rock-Eval data from RE_read
 #' @param oven Pyrolysis or Oxidation oven
 #' @param thermogram Must be one of the columns of the oven data, e.g., CO2
-#' @param vector Vector containing temperature intervals (excluding 0 and max)
+#' @param temperatures Vector containing temperature intervals (excluding 0 and max)
 #' @return Input list with included areas of Rock-Eval zones
 #'
 #' @section How to use:

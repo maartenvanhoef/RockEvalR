@@ -13,7 +13,7 @@ RE_customarea(list, oven, thermogram, temperatures)
 
 \item{thermogram}{Must be one of the columns of the oven data, e.g., CO2}
 
-\item{vector}{Vector containing temperature intervals (excluding 0 and max)}
+\item{temperatures}{Vector containing temperature intervals (excluding 0 and max)}
 }
 \value{
 Input list with included areas of Rock-Eval zones

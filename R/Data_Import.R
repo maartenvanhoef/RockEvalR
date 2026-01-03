@@ -43,9 +43,9 @@ RE_read <- function(dataloc){
     if (length(file.i)>1) {
 
       #2.2.3 description of the lines to cut
-      file.i.rp1<-which(str_detect(file.i,"Curves Pyro"))+1 #row pyro start
-      file.i.rp2<-which(str_detect(file.i,"Curves Oxi"))-1 #row pyro end
-      file.i.ro1<-which(str_detect(file.i,"Curves Oxi"))+1 #row oxi start
+      file.i.rp1<-which(stringr::str_detect(file.i,"Curves Pyro"))+1 #row pyro start
+      file.i.rp2<-which(stringr::str_detect(file.i,"Curves Oxi"))-1 #row pyro end
+      file.i.ro1<-which(stringr::str_detect(file.i,"Curves Oxi"))+1 #row oxi start
       file.i.ro2<-length(file.i) #row oxi end - this may be affected by additions to the file, need to check
 
 
@@ -63,16 +63,16 @@ RE_read <- function(dataloc){
 
 
     #2.2.6 check for Geoworks derived cursors and calibration info
-    if (any(str_detect(file.i,"Geoworks"))){
+    if (any(stringr::str_detect(file.i,"Geoworks"))){
 
       #2.2.7 description of the lines to cut for cursors
-      file.i.rc1<-which(str_detect(file.i,"Curs manu_1")) #row Curs start
-      file.i.rc2<-which(str_detect(file.i,"Curs manu_7"))+6 #row Curs end
+      file.i.rc1<-which(stringr::str_detect(file.i,"Curs manu_1")) #row Curs start
+      file.i.rc2<-which(stringr::str_detect(file.i,"Curs manu_7"))+6 #row Curs end
 
       #2.2.8 extract cursors
       file.i.curs<-file.i[file.i.rc1:file.i.rc2]
       rcv<-c(2:8,11:14,17:20,23:27,30:34,37:42,45:50) #rows with actual data
-      file.i.curs<-as.numeric(str_extract(file.i.curs[rcv],"(?<==).*"))
+      file.i.curs<-as.numeric(stringr::str_extract(file.i.curs[rcv],"(?<==).*"))
       names(file.i.curs)<-c(
         paste0("curs1.",1:6),
         "base1",
@@ -91,13 +91,13 @@ RE_read <- function(dataloc){
 
       #2.2.9 description of the lines to cut for the calibration
       # currently only KID and Tpeak are not pre-calibrated
-      file.i.rcal1<-which(str_detect(file.i,"P_HC_K1=")) #row calibration 1
-      file.i.rcal2<-which(str_detect(file.i,"TempSTD=")) #row calibration 2
-      file.i.rcal3<-which(str_detect(file.i,"TempFID=")) #row calibration 3
+      file.i.rcal1<-which(stringr::str_detect(file.i,"P_HC_K1=")) #row calibration 1
+      file.i.rcal2<-which(stringr::str_detect(file.i,"TempSTD=")) #row calibration 2
+      file.i.rcal3<-which(stringr::str_detect(file.i,"TempFID=")) #row calibration 3
 
       #2.2.10 extract calibration
       file.i.cals<-file.i[c(file.i.rcal1,file.i.rcal2,file.i.rcal3)]
-      file.i.cals<-as.numeric(str_extract(file.i.cals,"(?<==).*"))
+      file.i.cals<-as.numeric(stringr::str_extract(file.i.cals,"(?<==).*"))
       names(file.i.cals)<-c("cal_FID","cal_Tmax","cal_Tpeak")
 
     }    else{
@@ -130,21 +130,21 @@ RE_read <- function(dataloc){
     }
 
       #2.2.11 read sample parameter info
-      file.i.ri1<-which(str_detect(file.i,"Param"))+1 #row parameter info start
-      file.i.ri2<-which(str_detect(file.i,"Param"))+12 #row parameter info end
+      file.i.ri1<-which(stringr::str_detect(file.i,"Param"))+1 #row parameter info start
+      file.i.ri2<-which(stringr::str_detect(file.i,"Param"))+12 #row parameter info end
 
-      file.parameters<-str_extract(file.i[file.i.ri1:file.i.ri2],"(?<==).*")
-      names(file.parameters)<-str_extract(file.i[file.i.ri1:file.i.ri2],".*(?==)")
+      file.parameters<-stringr::str_extract(file.i[file.i.ri1:file.i.ri2],"(?<==).*")
+      names(file.parameters)<-stringr::str_extract(file.i[file.i.ri1:file.i.ri2],".*(?==)")
 
       #2.2.12 read coefficient info
-      file.i.rf1<-which(str_detect(file.i,"Coeff"))+1 #row coefficient info start
-      file.i.rf2<-which(str_detect(file.i,"Coeff"))+33 #row coefficient info end
+      file.i.rf1<-which(stringr::str_detect(file.i,"Coeff"))+1 #row coefficient info start
+      file.i.rf2<-which(stringr::str_detect(file.i,"Coeff"))+33 #row coefficient info end
 
       file.coefficients<-as.numeric(
-        str_extract(file.i[file.i.rf1:file.i.rf2],"(?<==).*"))
-      names(file.coefficients)<-str_extract(file.i[file.i.rf1:file.i.rf2],".*(?==)")
+        stringr::str_extract(file.i[file.i.rf1:file.i.rf2],"(?<==).*"))
+      names(file.coefficients)<-stringr::str_extract(file.i[file.i.rf1:file.i.rf2],".*(?==)")
       # remove 'empty gas' coefficients
-      file.coefficients<-file.coefficients[!str_detect(names(file.coefficients),
+      file.coefficients<-file.coefficients[!stringr::str_detect(names(file.coefficients),
                                                              "GAS")]
 
       #2.2.13 combine the thermograms, cursors and calibration into a list

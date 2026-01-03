@@ -109,9 +109,9 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
       S5S.t<-sample[["Oxidation"]][["SO2"]][tr.s5S]
 
       #3.2 Make time series continuous over entire time range
-      S1S<-c(S1.t,S2.t*0,S3S.t*0)
-      S2S<-c(S1.t*0,S2.t,S3S.t*0)
-      S3S<-c(S1.t*0,S2.t*0,S3S.t)
+      S1S<-c(S1S.t,S2S.t*0,S3S.t*0)
+      S2S<-c(S1S.t*0,S2S.t,S3S.t*0)
+      S3S<-c(S1S.t*0,S2S.t*0,S3S.t)
 
       S4S<-c(S4S.t,S5S.t*0)
       S5S<-c(S4S.t*0,S5S.t)
@@ -149,10 +149,11 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
 #' Additionally, for the sulphur index (SI) the total C has to be determined with the RE_surfaces() function.
 #' From these areas the basic Rock-Eval metrics are then computed.
 #' The determination of most sulphur-species depends on empirical correction of matrix effects.
+#' Based on type of sample (e.g., Kerogen type), and data availability different empirical adjustments may lead to better results.
 #'
-#' In this case total organic S is calculated from a relationship with the Tmax_S during pyrolysis:
+#' In this case total organic S is calculated from a relationship with the Tmax_CH during pyrolysis:
 #'
-#' (Pyrolysed org S) / (Total org S) = (org.conversion.a) x (Tmax_S) + (org.conversion.b)
+#' (Pyrolysed org S) / (Total org S) = (org.conversion.a) x (Tmax_CH) + (org.conversion.b)
 #'
 #' (Total inorg S) = (Total S) - (Total org S)
 #'
@@ -182,7 +183,7 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
 #' Cohen-Sadon, et al. (2025). Tmax-S: A new proxy for the role of sulphur on sedimentary organic matter preservation and thermal maturation. Journal of Analytical and Applied Pyrolysis 190 - 107115.
 #'
 #' @export
-RE_Smetrics<-function(list, org.conversion.a=-0.75, org.conversion.b=380){
+RE_Smetrics<-function(list, org.conversion.a=-1.90, org.conversion.b=843){
   #1.1 take list to extend
   list.extended<-list
 
@@ -223,7 +224,9 @@ RE_Smetrics<-function(list, org.conversion.a=-0.75, org.conversion.b=380){
     TS<-POS+PIS+RTS
 
     #2.5 Empirically corrected organic sulphur species
-    PyOS.emp<-org.conversion.a*Tpeak_S + org.conversion.b
+    Tmax_CH<-sample[["Metrics_C"]][["Tpeak"]]-39 #using empirical conversion from Tpeak of S2 to Tmax
+
+    PyOS.emp<-org.conversion.a*Tmax_CH + org.conversion.b
     PyOS.emp<-ifelse(PyOS.emp>100,NA,PyOS.emp)
     PyOS.emp<-ifelse(PyOS.emp<1,NA,PyOS.emp)
 

@@ -4,7 +4,7 @@
 \alias{RE_Smetrics}
 \title{Calculate Rock-Eval Sulphur metrics}
 \usage{
-RE_Smetrics(list, org.conversion.a = -0.75, org.conversion.b = 380)
+RE_Smetrics(list, org.conversion.a = -1.9, org.conversion.b = 843)
 }
 \arguments{
 \item{list}{List with converted Rock-Eval data and zone areas}
@@ -26,10 +26,11 @@ This can be done with the RE_Ssurfaces() function.
 Additionally, for the sulphur index (SI) the total C has to be determined with the RE_surfaces() function.
 From these areas the basic Rock-Eval metrics are then computed.
 The determination of most sulphur-species depends on empirical correction of matrix effects.
+Based on type of sample (e.g., Kerogen type), and data availability different empirical adjustments may lead to better results.
 
-In this case total organic S is calculated from a relationship with the Tmax_S during pyrolysis:
+In this case total organic S is calculated from a relationship with the Tmax_CH during pyrolysis:
 
-(Pyrolysed org S) / (Total org S) = (org.conversion.a) x (Tmax_S) + (org.conversion.b)
+(Pyrolysed org S) / (Total org S) = (org.conversion.a) x (Tmax_CH) + (org.conversion.b)
 
 (Total inorg S) = (Total S) - (Total org S)
 }
