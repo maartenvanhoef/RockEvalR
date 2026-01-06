@@ -196,7 +196,7 @@ RE_Smetrics<-function(list, org.conversion.a=-1.90, org.conversion.b=843){
   list.extended<-lapply(list.extended, function(sample){
 
     #2.1 Temperature parameters
-    tr.min.s2S<-which(sample[["Pyrolysis"]]["T"] >= 475 &
+    tr.min.s2S<-which(sample[["Pyrolysis"]]["T"] >= 400 &
                       sample[["Pyrolysis"]]["T"] <= 550 &
                       sample[["Pyrolysis"]]["t"] < sample[["Cursors"]]["curs4.3"])
 
