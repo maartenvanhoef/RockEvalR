@@ -51,7 +51,7 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
   list.extended<-lapply(list.extended, function(sample){
 
     #2.1.1 Determine the lowest value within the time range where minima need to be determined
-    tr.min.s2S<-which(sample[["Pyrolysis"]]["T"] >= 475 &
+    tr.min.s2S<-which(sample[["Pyrolysis"]]["T"] >= 400 &
                       sample[["Pyrolysis"]]["T"] <= 550 &
                       sample[["Pyrolysis"]]["t"] < sample[["Cursors"]]["curs4.3"])
 
