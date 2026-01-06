@@ -40,8 +40,8 @@ Here the areas and nomenclature of Cohen-Sadon et al. (2022) are used instead of
 
 \itemize{
 \item S1S, pyrolysed before start of the heating ramp
-\item S2S, pyrolysed from start of heating until minimum between 475 and 550 C
-\item S3S, pyrolysed after minimum between 475 and 550 C
+\item S2S, pyrolysed from start of heating until minimum between 400 and 550 C
+\item S3S, pyrolysed after minimum between 400 and 550 C
 \item S4S, oxidised below minimum between 550 and 650 C
 \item S5S, oxidised above minimum between 550 and 650 C
 }

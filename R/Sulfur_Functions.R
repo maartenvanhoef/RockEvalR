@@ -24,8 +24,8 @@
 #' @section Cut-off info:
 #' \itemize{
 #' \item S1S, pyrolysed before start of the heating ramp
-#' \item S2S, pyrolysed from start of heating until minimum between 475 and 550 C
-#' \item S3S, pyrolysed after minimum between 475 and 550 C
+#' \item S2S, pyrolysed from start of heating until minimum between 400 and 550 C
+#' \item S3S, pyrolysed after minimum between 400 and 550 C
 #' \item S4S, oxidised below minimum between 550 and 650 C
 #' \item S5S, oxidised above minimum between 550 and 650 C
 #'}
@@ -55,7 +55,7 @@ RE_Ssurfaces<-function(list, time.include=FALSE){
                       sample[["Pyrolysis"]]["T"] <= 550 &
                       sample[["Pyrolysis"]]["t"] < sample[["Cursors"]]["curs4.3"])
 
-    ts.min.s2S<-which.min(sample[["Pyrolysis"]][["SO2"]][tr.min.s2S])+which.max(sample[["Pyrolysis"]]["T"] >= 475)
+    ts.min.s2S<-which.min(sample[["Pyrolysis"]][["SO2"]][tr.min.s2S])+which.max(sample[["Pyrolysis"]]["T"] >= 400)
 
 
     tr.min.s4S<-which(sample[["Oxidation"]]["T"] >= 550 &
@@ -200,7 +200,7 @@ RE_Smetrics<-function(list, org.conversion.a=-1.90, org.conversion.b=843){
                       sample[["Pyrolysis"]]["T"] <= 550 &
                       sample[["Pyrolysis"]]["t"] < sample[["Cursors"]]["curs4.3"])
 
-    ts.min.s2S<-which.min(sample[["Pyrolysis"]][["SO2"]][tr.min.s2S])+which.max(sample[["Pyrolysis"]]["T"] >= 475)
+    ts.min.s2S<-which.min(sample[["Pyrolysis"]][["SO2"]][tr.min.s2S])+which.max(sample[["Pyrolysis"]]["T"] >= 400)
 
     tr.Tpeak_S<-which(sample[["Pyrolysis"]]["t"] <= ts.min.s2S)
 
