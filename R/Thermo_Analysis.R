@@ -361,7 +361,7 @@ RE_OHcombined<-function(list){
       sample[["Pyrolysis"]][["CH"]]*0.17
 
     PO.t<-
-      sample[["Pyrolysis"]][["CO"]]*16/28*+
+      sample[["Pyrolysis"]][["CO"]]*16/28+
       sample[["Pyrolysis"]][["CO2"]]*32/44
 
     RO.t<-
