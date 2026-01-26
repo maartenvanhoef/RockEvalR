@@ -365,7 +365,7 @@ RE_OHcombined<-function(list){
       sample[["Pyrolysis"]][["CO2"]]*32/44
 
     RO.t<-
-      sample[["Oxidation"]][["CO"]]*16/28*+
+      sample[["Oxidation"]][["CO"]]*16/28+
       sample[["Oxidation"]][["CO2"]]*32/44
 
     #3 the separation between organic and inorganic varies for the different curves (S1, S2, S3, ...)
