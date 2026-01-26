@@ -295,7 +295,7 @@ RE_Ccombined<-function(list){
     S3CO2i.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i]*12/44
 
     S4CO.t<-sample[["Oxidation"]][["CO"]][tr.s4CO]*12/28
-    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*12/28)
+    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*12/28
 
     S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*12/44
     S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*12/44
