@@ -258,13 +258,13 @@ RE_Ccombined<-function(list){
   list.adapted<-lapply(list.adapted, function(sample){
 
     PC.t<-
-      sample[["Pyrolysis"]][["CH"]]*0.83/10+
-      sample[["Pyrolysis"]][["CO"]]*12/(28*10)+
-      sample[["Pyrolysis"]][["CO2"]]*12/(44*10)
+      sample[["Pyrolysis"]][["CH"]]*0.83+
+      sample[["Pyrolysis"]][["CO"]]*12/28+
+      sample[["Pyrolysis"]][["CO2"]]*12/44
 
    RC.t<-
-      sample[["Oxidation"]][["CO"]]*12/(28*10)+
-      sample[["Oxidation"]][["CO2"]]*12/(44*10)
+      sample[["Oxidation"]][["CO"]]*12/28+
+      sample[["Oxidation"]][["CO2"]]*12/44
 
   #3 the separation between organic and inorganic varies for the different curves (S1, S2, S3, ...)
 
@@ -285,20 +285,20 @@ RE_Ccombined<-function(list){
     tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"]+1,length(sample[["Oxidation"]][["t"]]))
 
     #3.1.2 Compute the C flux between these cursors
-    S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.83/10
-    S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.83/10
+    S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.83
+    S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.83
 
-    S3CO.t<-sample[["Pyrolysis"]][["CO"]][tr.s3CO]*12/(28*10)
-    S3COi.t<-sample[["Pyrolysis"]][["CO"]][tr.s3COi]*12/(28*10)
+    S3CO.t<-sample[["Pyrolysis"]][["CO"]][tr.s3CO]*12/28
+    S3COi.t<-sample[["Pyrolysis"]][["CO"]][tr.s3COi]*12/28
 
-    S3CO2.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2]*12/(44*10)
-    S3CO2i.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i]*12/(44*10)
+    S3CO2.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2]*12/44
+    S3CO2i.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i]*12/44
 
-    S4CO.t<-sample[["Oxidation"]][["CO"]][tr.s4CO]*12/(28*10)
-    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*12/(28*10)
+    S4CO.t<-sample[["Oxidation"]][["CO"]][tr.s4CO]*12/28
+    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*12/28)
 
-    S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*12/(44*10)
-    S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*12/(44*10)
+    S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*12/44
+    S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*12/44
 
     #3.1.4 Combine the separated curves over the whole time range
     POC.t<-c(S1.t,S2.t)+c(S3CO.t,S3COi.t/2)+c(S3CO2.t,S3CO2i.t*0)
@@ -358,15 +358,15 @@ RE_OHcombined<-function(list){
   #2 the total O in each oven is a simple addition
   list.adapted<-lapply(list.adapted, function(sample){
     PH.t<-
-      sample[["Pyrolysis"]][["CH"]]*0.17/10
+      sample[["Pyrolysis"]][["CH"]]*0.17
 
     PO.t<-
-      sample[["Pyrolysis"]][["CO"]]*16/(28*10)+
-      sample[["Pyrolysis"]][["CO2"]]*32/(44*10)
+      sample[["Pyrolysis"]][["CO"]]*16/28*+
+      sample[["Pyrolysis"]][["CO2"]]*32/44
 
     RO.t<-
-      sample[["Oxidation"]][["CO"]]*16/(28*10)+
-      sample[["Oxidation"]][["CO2"]]*32/(44*10)
+      sample[["Oxidation"]][["CO"]]*16/28*+
+      sample[["Oxidation"]][["CO2"]]*32/44
 
     #3 the separation between organic and inorganic varies for the different curves (S1, S2, S3, ...)
 
@@ -387,20 +387,20 @@ RE_OHcombined<-function(list){
     tr.s5<-s.seq(sample[["Cursors"]]["curs6.2"]+1,length(sample[["Oxidation"]][["t"]]))
 
     #3.1.2 Compute the C flux between these cursors
-    # S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.17/10
-    # S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.17/10
+    # S1.t<-sample[["Pyrolysis"]][["CH"]][tr.s1]*0.17
+    # S2.t<-sample[["Pyrolysis"]][["CH"]][tr.s2]*0.17
 
-    S3CO.t<-sample[["Pyrolysis"]][["CO"]][tr.s3CO]*16/(28*10)
-    S3COi.t<-sample[["Pyrolysis"]][["CO"]][tr.s3COi]*16/(28*10)
+    S3CO.t<-sample[["Pyrolysis"]][["CO"]][tr.s3CO]*16/28
+    S3COi.t<-sample[["Pyrolysis"]][["CO"]][tr.s3COi]*16/28
 
-    S3CO2.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2]*32/(44*10)
-    S3CO2i.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i]*32/(44*10)
+    S3CO2.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2]*32/44
+    S3CO2i.t<-sample[["Pyrolysis"]][["CO2"]][tr.s3CO2i]*32/44
 
-    S4CO.t<-sample[["Oxidation"]][["CO"]][tr.s4CO]*16/(28*10)
-    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*16/(28*10)
+    S4CO.t<-sample[["Oxidation"]][["CO"]][tr.s4CO]*16/28
+    S4COi.t<-sample[["Oxidation"]][["CO"]][tr.s4COi]*16/28
 
-    S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*32/(44*10)
-    S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*32/(44*10)
+    S4CO2.t<-sample[["Oxidation"]][["CO2"]][tr.s4CO2]*32/44
+    S5.t<-sample[["Oxidation"]][["CO2"]][tr.s5]*32/44
 
     #3.1.4 Combine the separated curves over the whole time range
     # POH.t<-c(S1.t,S2.t)
